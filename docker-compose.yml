@@ -1,0 +1,31 @@
+version: '3.4'
+
+x-app: &app
+  image: beabee/beabee:latest
+  volumes:
+    - ./config:/opt/membership-system/built/config
+  env_file:
+    - .env
+
+services:
+  app: *app
+
+  gc_webhook:
+    <<: *app
+    command: 'node built/webhooks/gocardless'
+
+  stripe_webhook:
+    <<: *app
+    command: 'node built/webhooks/stripe'
+
+  cron:
+    <<: *app
+    user: root
+    command: 'crond -f -d 0'
+
+  router:
+    image: beabee/router:latest
+    volumes:
+      - ./data/uploads:/opt/membership-system/built/uploads:ro
+    ports:
+      - ${PORT}:80
