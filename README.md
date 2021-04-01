@@ -16,7 +16,10 @@ mkdir -p /opt/beabee
 
 adduser deploy
 curl -o /home/deploy/deploy.sh https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/deploy.sh
-echo 'deploy  ALL=(root) NOPASSWD: /home/deploy/deploy.sh' > /etc/sudoers.d/deploy
+
+echo 'Defaults:deploy env_keep += "SSH_ORIGINAL_COMMAND"' > /etc/sudoers.d/deploy
+echo 'deploy  ALL=(root) NOPASSWD: /home/deploy/deploy.sh' >> /etc/sudoers.d/deploy
+
 cat > /home/deploy/.ssh/authorized_keys <<EOF
 command="sudo /home/deploy/deploy.sh",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty <private key>
 EOF
@@ -25,19 +28,19 @@ EOF
 This creates a user `deploy` who can only run `deploy.sh`, you can use this to
 trigger a deploy (e.g. in a GitHub action)
 ```bash
-ssh deploy@<server> deploy
+ssh deploy@<server> <stage>
 ```
 
 ### Add an instance
 
-`deploy.sh` assumes instances are in `/opt/beabee/<name>`
+`deploy.sh` assumes instances are in `/opt/beabee/<stage>/<name>`
 
 Run the following as root, replace `<name>` with a name for your instance. You
 also need to create a database somewhere.
 
 ```bash
-mkdir /opt/beabee/<name>
-cd /opt/beabee/<name>
+mkdir /opt/beabee/<stage>/<name>
+cd /opt/beabee/<stage>/<name>
 curl -o docker-compose.yml https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/docker-compose.yml
 
 # Setup config (you need to fill in .env and config.json)

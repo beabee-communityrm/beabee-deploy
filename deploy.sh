@@ -1,14 +1,27 @@
 #!/bin/bash
 
-for app in $(find /opt/beabee -mindepth 2 -maxdepth 2 -name docker-compose.yml); do
-        proj=$(basename $(dirname $app))
-        dc="docker-compose -f $app -p $proj"
+stage="$SSH_ORIGINAL_COMMAND"
 
-        echo Deploying $proj
-        date
-        $dc pull
-        $dc run --rm --no-deps app npm run typeorm migration:run
-        $dc up -d
-        echo Finished deploying $proj
-        date
-done | tee -a deploy.log
+(
+        if [ "$stage" == "" -o ! -d "/opt/beabee/$stage" ]; then
+                echo "Unrecognised stage: $stage"
+                exit 1
+        fi
+
+        echo "# Deploying stage $stage"
+
+        for app in $(find /opt/beabee/$stage -mindepth 2 -maxdepth 2 -name docker-compose.yml); do
+                pushd $(dirname $app)
+
+                echo "## Updating $app"
+                date
+                docker-compose pull
+                docker-compose run --rm --no-deps app npm run typeorm migration:run
+                echo "## Restarting $app"
+                docker-compose up -d
+                echo "## Finished $app"
+                date
+
+                popd
+        done
+) 2>&1 | tee -a /var/log/deploy.log
