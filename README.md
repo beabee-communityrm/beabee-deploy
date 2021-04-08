@@ -14,12 +14,15 @@ Run the following as root, replace `<private key>` with a deploy key.
 ```bash
 mkdir -p /opt/beabee
 
-adduser deploy
-curl -o /home/deploy/deploy.sh https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/deploy.sh
+adduser --system --shell /bin/bash deploy
 
 echo 'Defaults:deploy env_keep += "SSH_ORIGINAL_COMMAND"' > /etc/sudoers.d/deploy
 echo 'deploy  ALL=(root) NOPASSWD: /home/deploy/deploy.sh' >> /etc/sudoers.d/deploy
 
+su deploy
+curl -o /home/deploy/deploy.sh https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/deploy.sh
+chmod +x /home/deploy/deploy.sh
+mkdir /home/deploy/.ssh
 cat > /home/deploy/.ssh/authorized_keys <<EOF
 command="sudo /home/deploy/deploy.sh",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty <private key>
 EOF
