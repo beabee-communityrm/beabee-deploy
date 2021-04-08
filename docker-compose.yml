@@ -1,11 +1,15 @@
 version: '3.4'
 
 x-app: &app
-  image: beabee/beabee:latest
+  image: thebristolcable/beabee:latest
   volumes:
     - ./config:/opt/membership-system/built/config
   env_file:
     - .env
+  logging:
+    driver: syslog
+    options:
+      tag: docker/{{.Name}}
 
 services:
   app: *app
@@ -24,8 +28,15 @@ services:
     command: 'crond -f -d 0'
 
   router:
-    image: beabee/router:latest
+    image: thebristolcable/router:latest
     volumes:
       - ./data/uploads:/opt/membership-system/built/uploads:ro
     ports:
       - ${PORT}:80
+
+  run:
+    <<: *app
+    profiles:
+      - tools
+    logging:
+      driver: none
