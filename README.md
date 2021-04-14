@@ -11,7 +11,7 @@ Requirements:
 ### Basic setup
 
 `deploy.sh` assumes instances are in `/opt/beabee/<stage>/<name>`, if you aren't setting
-up auto deployment, you can use any location.
+up auto deployment you can use any directory.
 
 Run the following as root, replace `<name>` with a name for your instance. You
 also need to create a database somewhere.
