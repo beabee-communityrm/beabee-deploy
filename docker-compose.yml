@@ -1,7 +1,7 @@
 version: '3.4'
 
 x-app: &app
-  image: thebristolcable/beabee:latest
+  image: beabee/beabee:latest
   volumes:
     - ./config:/opt/membership-system/built/config
   env_file:
@@ -28,7 +28,7 @@ services:
     command: 'crond -f -d 0'
 
   router:
-    image: thebristolcable/router:latest
+    image: beabee/router:latest
     volumes:
       - ./data/uploads:/opt/membership-system/built/uploads:ro
     ports:
