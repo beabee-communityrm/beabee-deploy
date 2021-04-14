@@ -1,6 +1,6 @@
-Very basic server setup with auto deployment for beabee. This is just an
-example and it might be missing some steps, if you hit any problems or find
-anything confusing raise an issue.
+Very basic server setup with optional auto deployment for beabee. If you hit any
+problems or find anything confusing please raise an issue, these instructions
+are evolving!
 
 Requirements:
 
