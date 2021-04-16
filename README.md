@@ -13,12 +13,14 @@ Requirements:
 Run the following as root, replace `<name>` with a name for your instance. You
 also need to create a database somewhere.
 
-NOTE: `deploy.sh` assumes instances are in `/opt/beabee/<stage>/<name>`, if you
-aren't setting up auto deployment you can use any directory.
+NOTE: The deployment script `deploy.sh` assumes instances are in
+`/opt/beabee/<stage>/<name>`, if you aren't setting up auto deployment you can
+use any directory.
 
 ```bash
 mkdir -p /opt/beabee/<stage>/<name>
 cd /opt/beabee/<stage>/<name>
+
 curl -o docker-compose.yml https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/docker-compose.yml
 
 # Setup config (you need to fill in .env and config.json)
