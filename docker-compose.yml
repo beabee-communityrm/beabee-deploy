@@ -14,18 +14,15 @@ x-app: &app
 services:
   app: *app
 
-  gc_webhook:
+  webhook_app:
     <<: *app
-    command: 'node built/webhooks/gocardless'
-
-  stripe_webhook:
-    <<: *app
-    command: 'node built/webhooks/stripe'
+    command: 'node built/webhooks/app'
 
   cron:
     <<: *app
     user: root
     command: 'crond -f -d 0'
+    init: true
 
   router:
     image: beabee/router:latest
