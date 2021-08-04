@@ -14,6 +14,10 @@ x-app: &app
 services:
   app: *app
 
+  api_app:
+    <<: *app
+    command: 'node built/api/app'
+
   webhook_app:
     <<: *app
     command: 'node built/webhooks/app'
@@ -28,8 +32,7 @@ services:
     image: beabee/router:latest
     volumes:
       - ./data/uploads:/opt/membership-system/built/uploads:ro
-    ports:
-      - ${PORT}:80
+      - ./data/favicon:/opt/membership-system/built/static/favicon:ro
 
   run:
     <<: *app
@@ -37,3 +40,22 @@ services:
       - tools
     logging:
       driver: none
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        THEME: ${THEME}
+        AUDIENCE_URL: ${AUDIENCE_URL}
+        SERVER_API_URL: ${SERVER_API_URL}
+    init: true
+
+  frontend_router:
+    image: beabee/frontend-router:latest
+    env_file:
+      - .env
+    environment:
+      OLD_FRONTEND_URL: http://router
+    ports:
+      - ${MAIN_PORT}:80

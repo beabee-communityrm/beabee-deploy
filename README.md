@@ -21,7 +21,8 @@ use any directory.
 mkdir -p /opt/beabee/<stage>/<name>
 cd /opt/beabee/<stage>/<name>
 
-curl -o docker-compose.yml https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/docker-compose.yml
+curl -O https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/docker-compose.yml
+curl -O https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/Dockerfile.frontend
 
 # Setup config (you need to fill in .env and config.json)
 curl -o .env https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/.env.example
@@ -29,8 +30,11 @@ mkdir config
 curl -o config/config.json https://raw.githubusercontent.com/beabee-communityrm/beabee/master/src/config/example-config.json
 chmod 0600 .env
 
-# Somewhere to put uploads (we use an NFS mounted directory)
-mkdir -p data/uploads
+# Somewhere to put uploads and favicon stuff
+mkdir -p config data/uploads data/favicon
+
+# Frontend assets (see beabee-frontend)
+mkdir -p data/client/img content
 
 # Run database migrations
 docker-compose run --rm --no-deps run npm run typeorm migration:run
