@@ -16,10 +16,12 @@ stage="$SSH_ORIGINAL_COMMAND"
                 echo "## Updating $app"
                 date
                 docker-compose pull
+                docker-compose build --pull
                 docker-compose run --rm --no-deps run npm run typeorm migration:run
                 echo "## Restarting $app"
                 docker-compose up -d
                 docker-compose exec -T router nginx -s reload
+                docker-compose exec -T frontend_router nginx -s reload
                 echo "## Finished $app"
                 date
 
