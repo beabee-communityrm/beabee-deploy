@@ -2,8 +2,6 @@ version: '3.4'
 
 x-app: &app
   image: beabee/beabee:latest
-  volumes:
-    - ./config:/opt/membership-system/built/config
   env_file:
     - .env
   logging:
@@ -47,15 +45,14 @@ services:
       dockerfile: Dockerfile.frontend
       args:
         THEME: ${THEME}
-        AUDIENCE_URL: ${AUDIENCE_URL}
-        SERVER_API_URL: ${SERVER_API_URL}
+        AUDIENCE_URL: ${BEABEE_AUDIENCE}
+        SERVER_API_URL: ${BEABEE_AUDIENCE}/api/1.0
     init: true
 
   frontend_router:
     image: beabee/frontend-router:latest
-    env_file:
-      - .env
     environment:
       OLD_FRONTEND_URL: http://router
+      OLD_FRONTEND_COOKIE_DOMAIN: ${BEABEE_COOKIE_DOMAIN}
     ports:
       - ${MAIN_PORT}:80

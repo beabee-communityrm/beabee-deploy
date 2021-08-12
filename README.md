@@ -24,14 +24,12 @@ cd /opt/beabee/<stage>/<name>
 curl -O https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/docker-compose.yml
 curl -O https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/Dockerfile.frontend
 
-# Setup config (you need to fill in .env and config.json)
+# Setup config (you need to fill in .env)
 curl -o .env https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/.env.example
-mkdir config
-curl -o config/config.json https://raw.githubusercontent.com/beabee-communityrm/beabee/master/src/config/example-config.json
 chmod 0600 .env
 
 # Somewhere to put uploads and favicon stuff
-mkdir -p config data/uploads data/favicon
+mkdir -p data/uploads data/favicon
 
 # Frontend assets (see beabee-frontend)
 mkdir -p data/client/img content
