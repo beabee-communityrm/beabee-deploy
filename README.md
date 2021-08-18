@@ -62,13 +62,14 @@ Run the following as root, replace `<public key>` with a deploy key.
 adduser --system --shell /bin/bash deploy
 
 echo 'Defaults:deploy env_keep += "SSH_ORIGINAL_COMMAND"' > /etc/sudoers.d/deploy
-echo 'deploy  ALL=(root) NOPASSWD: /home/deploy/deploy.sh' >> /etc/sudoers.d/deploy
+echo 'deploy  ALL=(root) NOPASSWD: /opt/beabee/deploy.sh' >> /etc/sudoers.d/deploy
+
+curl -o /opt/beabee/deploy.sh https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/deploy.sh
+chmod 0755 /opt/beabee/deploy.sh
 
 su deploy
-curl -o /home/deploy/deploy.sh https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/deploy.sh
-chmod +x /home/deploy/deploy.sh
 mkdir /home/deploy/.ssh
-echo -n 'command="sudo /home/deploy/deploy.sh",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty' > /home/deploy/.ssh/authorized_keys
+echo -n 'command="sudo /opt/beabee/deploy.sh",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty' > /home/deploy/.ssh/authorized_keys
 cat <public key> > /home/deploy/.ssh/authorized_keys
 ```
 
