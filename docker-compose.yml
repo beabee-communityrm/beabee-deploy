@@ -23,7 +23,7 @@ services:
   cron:
     <<: *app
     user: root
-    command: 'crond -f -d 0'
+    command: 'crond -f -d 7'
     init: true
 
   router:
