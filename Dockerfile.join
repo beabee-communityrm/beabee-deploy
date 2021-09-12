@@ -1,0 +1,14 @@
+FROM beabee/join:latest
+
+ARG THEME
+ARG AUDIENCE_URL
+ARG SERVER_API_URL
+
+ENV THEME=$THEME
+ENV AUDIENCE_URL=$AUDIENCE_URL
+ENV SERVER_API_URL=$SERVER_API_URL
+
+COPY content/ /opt/beabee-frontend/content/
+COPY data/client/ /opt/beabee-frontend/assets/client/
+
+RUN npx nuxt build

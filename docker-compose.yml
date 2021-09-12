@@ -39,20 +39,27 @@ services:
     logging:
       driver: none
 
-  frontend:
+  join:
     build:
       context: .
-      dockerfile: Dockerfile.frontend
+      dockerfile: Dockerfile.join
       args:
         THEME: ${THEME}
         AUDIENCE_URL: ${BEABEE_AUDIENCE}
         SERVER_API_URL: ${BEABEE_AUDIENCE}/api/1.0
     init: true
 
-  frontend_router:
-    image: beabee/frontend-router:latest
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+
+  app_router:
+    image: beabee/app-router:latest
     environment:
-      OLD_FRONTEND_URL: http://router
-      OLD_FRONTEND_COOKIE_DOMAIN: ${BEABEE_COOKIE_DOMAIN}
+      LEGACY_APP_URL: http://router
+      LEGACY_APP_COOKIE_DOMAIN: ${BEABEE_COOKIE_DOMAIN}
+      FRONTEND_APP_URL: http://frontend
+      JOIN_APP_URL: http://join:8080
     ports:
       - ${MAIN_PORT}:80

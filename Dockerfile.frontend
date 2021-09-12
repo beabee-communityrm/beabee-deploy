@@ -1,14 +1,9 @@
-FROM beabee/frontend:latest
+FROM beabee/frontend:dev as builder
 
-ARG THEME
-ARG AUDIENCE_URL
-ARG SERVER_API_URL
-
-ENV THEME=$THEME
-ENV AUDIENCE_URL=$AUDIENCE_URL
-ENV SERVER_API_URL=$SERVER_API_URL
-
-COPY content/ /opt/beabee-frontend/content/
 COPY data/client/ /opt/beabee-frontend/assets/client/
 
-RUN npx nuxt build
+RUN npm run build
+
+FROM nginx:1.18.0-alpine
+
+COPY --from=builder www-data:www-data ./dist/ /var/html/www/
