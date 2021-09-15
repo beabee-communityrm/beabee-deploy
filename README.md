@@ -40,6 +40,8 @@ mkdir -p data/client/img content
 docker-compose run --rm --no-deps run npm run typeorm migration:run
 
 # Start beabee
+docker-compose pull
+DOCKER_BUILDKIT=1 docker-compose build --pull
 docker-compose up -d
 ```
 #### Logging
