@@ -16,7 +16,7 @@ stage="$SSH_ORIGINAL_COMMAND"
                 echo "## Updating $app"
                 date
                 docker-compose pull
-                docker-compose build --pull
+                DOCKER_BUILDKIT=1 docker-compose build --pull
                 docker-compose run --rm --no-deps run npm run typeorm migration:run
                 echo "## Restarting $app"
                 docker-compose up -d
