@@ -21,7 +21,7 @@ stage="$SSH_ORIGINAL_COMMAND"
                 echo "## Restarting $app"
                 docker-compose up -d
                 docker-compose exec -T router nginx -s reload
-                docker-compose exec -T frontend_router nginx -s reload
+                docker-compose exec -T app_router nginx -s reload
                 echo "## Finished $app"
                 date
 
