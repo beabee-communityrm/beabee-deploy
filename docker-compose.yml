@@ -53,6 +53,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.frontend
+      args:
+        APP_BASE_URL: ${BEABEE_AUDIENCE}
+        APP_CURRENCY: ${BEABEE_CURRENCYCODE}
+        NEWSROOM_NAME: ${BEABEE_NEWSROOM_NAME}
+        NEWSROOM_LINK: ${BEABEE_NEWSROOM_LINK}
 
   app_router:
     image: beabee/app-router:latest
