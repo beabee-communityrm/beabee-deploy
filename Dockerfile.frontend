@@ -2,7 +2,8 @@
 
 FROM beabee/frontend:latest as builder
 
-COPY data/client/ /opt/beabee-frontend/assets/client/
+COPY theme.json /opt/beabee-frontend/
+COPY data/assets/images/ /opt/beabee-frontend/src/assets/images/
 
 ARG API_BASE_URL=/api/1.0
 ARG APP_BASE_URL
