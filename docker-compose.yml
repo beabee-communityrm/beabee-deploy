@@ -29,7 +29,6 @@ services:
   router:
     image: beabee/router:latest
     volumes:
-      - ./data/uploads:/opt/membership-system/built/uploads:ro
       - ./data/favicon:/opt/membership-system/built/static/favicon:ro
 
   run:
@@ -46,6 +45,7 @@ services:
       args:
         APP_BASE_URL: ${BEABEE_AUDIENCE}
         APP_CURRENCY: ${BEABEE_CURRENCYCODE}
+        APP_LOCALE: ${BEABEE_LOCALE}
         NEWSROOM_NAME: ${BEABEE_NEWSROOM_NAME}
         NEWSROOM_LINK: ${BEABEE_NEWSROOM_LINK}
 

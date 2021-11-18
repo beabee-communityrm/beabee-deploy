@@ -2,12 +2,12 @@
 
 FROM beabee/frontend:latest as builder
 
-COPY theme.json /opt/beabee-frontend/
-COPY data/assets/images/ /opt/beabee-frontend/src/assets/images/
+ENV NODE_ENV=production
 
 ARG API_BASE_URL=/api/1.0
 ARG APP_BASE_URL
 ARG APP_CURRENCY
+ARG APP_LOCALE
 ARG NEWSROOM_NAME
 ARG NEWSROOM_LINK
 
@@ -16,6 +16,11 @@ ENV VITE_APP_BASE_URL=$APP_BASE_URL
 ENV VITE_CURRENCY=$APP_CURRENCY
 ENV VITE_NEWSROOM_NAME=$NEWSROOM_NAME
 ENV VITE_NEWSROOM_LINK=$NEWSROOM_LINK
+
+RUN ln -sf ${APP_LOCALE}.json locales/_current.json
+COPY data/assets/ /opt/beabee-frontend/src/assets/
+COPY theme.json /opt/beabee-frontend/
+COPY data/public/ /opt/beabee-frontend/public/
 
 RUN npm run build
 
