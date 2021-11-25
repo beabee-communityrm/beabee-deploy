@@ -28,8 +28,6 @@ services:
 
   router:
     image: beabee/router:latest
-    volumes:
-      - ./data/favicon:/opt/membership-system/built/static/favicon:ro
 
   run:
     <<: *app
