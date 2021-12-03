@@ -22,7 +22,7 @@ COPY data/assets/ /opt/beabee-frontend/src/assets/
 COPY theme.json /opt/beabee-frontend/
 COPY data/public/ /opt/beabee-frontend/public/
 
-RUN npm run build
+RUN npx vite build
 
 FROM nginx:1.18.0-alpine
 
