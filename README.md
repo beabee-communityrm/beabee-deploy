@@ -29,11 +29,8 @@ curl -O https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/
 curl -o .env https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/.env.example
 chmod 0600 .env
 
-# Somewhere to put uploads and favicon stuff
-mkdir -p data/uploads data/favicon
-
 # Frontend assets (see beabee-frontend)
-mkdir -p data/client/img content
+mkdir -p data/public data/assets
 
 # Run database migrations
 docker-compose run --rm --no-deps run npm run typeorm migration:run
