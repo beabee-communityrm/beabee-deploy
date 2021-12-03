@@ -28,9 +28,6 @@ services:
 
   router:
     image: beabee/router:latest
-    volumes:
-      - ./data/uploads:/opt/membership-system/built/uploads:ro
-      - ./data/favicon:/opt/membership-system/built/static/favicon:ro
 
   run:
     <<: *app
@@ -39,20 +36,16 @@ services:
     logging:
       driver: none
 
-  join:
-    build:
-      context: .
-      dockerfile: Dockerfile.join
-      args:
-        THEME: ${THEME}
-        AUDIENCE_URL: ${BEABEE_AUDIENCE}
-        SERVER_API_URL: ${BEABEE_AUDIENCE}/api/1.0
-    init: true
-
   frontend:
     build:
       context: .
       dockerfile: Dockerfile.frontend
+      args:
+        APP_BASE_URL: ${BEABEE_AUDIENCE}
+        APP_CURRENCY: ${BEABEE_CURRENCYCODE}
+        APP_LOCALE: ${BEABEE_LOCALE}
+        NEWSROOM_NAME: ${BEABEE_NEWSROOM_NAME}
+        NEWSROOM_LINK: ${BEABEE_NEWSROOM_LINK}
 
   app_router:
     image: beabee/app-router:latest
@@ -60,6 +53,5 @@ services:
       LEGACY_APP_URL: http://router
       LEGACY_APP_COOKIE_DOMAIN: ${BEABEE_COOKIE_DOMAIN}
       FRONTEND_APP_URL: http://frontend
-      JOIN_APP_URL: http://join:8080
     ports:
       - ${MAIN_PORT}:80
