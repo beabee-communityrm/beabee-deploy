@@ -23,7 +23,6 @@ cd /opt/beabee/<stage>/<name>
 
 curl -O https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/docker-compose.yml
 curl -O https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/Dockerfile.frontend
-curl -O https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/Dockerfile.join
 
 # Setup config (you need to fill in .env)
 curl -o .env https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/.env.example
