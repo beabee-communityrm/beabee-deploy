@@ -36,7 +36,12 @@ server {
   index index.html;
 
   location / {
+    expires -1;
     try_files \$uri \$uri/ /index.html;
+  }
+
+  location /assets {
+    expires 1y;
   }
 }
 EOF
