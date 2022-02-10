@@ -42,11 +42,7 @@ services:
       dockerfile: Dockerfile.frontend
       args:
         APP_BASE_URL: ${BEABEE_AUDIENCE}
-        APP_CURRENCY: ${BEABEE_CURRENCYCODE}
         APP_LOCALE: ${BEABEE_LOCALE}
-        NEWSROOM_NAME: ${BEABEE_NEWSROOM_NAME}
-        NEWSROOM_LINK: ${BEABEE_NEWSROOM_LINK}
-        NEWSROOM_EMAIL: ${BEABEE_NEWSROOM_EMAIL}
 
   app_router:
     image: beabee/app-router:latest
