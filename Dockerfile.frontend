@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.3-labs
 
-FROM beabee/frontend:latest as builder
+FROM beabee/frontend:stable as builder
 
 ENV NODE_ENV=production
 
