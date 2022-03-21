@@ -146,10 +146,10 @@ curl -o /etc/logrotate.d/docker https://raw.githubusercontent.com/beabee-communi
 
 ## Auto deployment setup
 
-> :warning: **NOTE**: The deployment script `deploy.sh` assumes beabee instances are installed in
-> `/opt/beabee/<stage>/<name>`
-
 Run the following as root, replace `<public key>` with a deploy key.
+
+**NOTE**: The deployment script `deploy.sh` assumes beabee instances are installed in
+`/opt/beabee/<stage>/<name>`
 
 ```bash
 adduser --system --shell /bin/bash deploy
