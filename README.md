@@ -45,7 +45,7 @@ curl -O https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/
 curl -o .env https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/.env.example
 chmod 0600 .env
 
-# Frontend assets (see beabee-frontend)
+# Frontend theming (see below)
 mkdir -p data/public data/assets
 
 # Run database migrations
@@ -57,9 +57,80 @@ DOCKER_BUILDKIT=1 docker-compose build --pull
 
 # Start beabee
 docker-compose up -d
+
+# Create a first user to login with
+docker-compose run --rm run node built/tools/new-user
 ```
 
-### 3. Configure logging
+### 3. Optional: Customise beabee's theme
+
+beabee's theme is customisable so it can match your site's identity.
+
+To apply changes to the theme you must rebuild and restart the Docker containers
+```
+DOCKER_BUILDKIT=1 docker-compose build --pull
+docker-compose up -d
+docker-compose restart
+```
+
+#### Logo and favicon
+
+Put your logo in `./data/assets/images/logo.png`, it should have a square aspect ratio (1:1)
+
+Use https://realfavicongenerator.net/ to generate your favicon assets and put the files in `./data/public`
+
+#### Colours
+
+Set the colours in `./theme.json`. The `primary` and `link` colours are required, all other are optional.
+
+* `primary`: Used to for lots of things, makes the app feel like yours!
+* `link`: Used for links and other navigational elements (use same as `primary` if unsure)
+* `body`: defaults to primary, the colour of body text
+* `warning`: warning notifications
+* `success`: success messages and notifications
+* `danger`: errors and highlighting dangerous actions
+* `white`: white
+* `black`: black
+
+#### Fonts
+
+You can customise a `title` and `body` font.
+
+1. Put your font files in `./data/assets/fonts`
+2. Create a stylesheet with `@font-face` declarations in `./data/assets/styles/fonts.css`
+
+  Here is an example `font.css` file
+  ```css
+  @font-face {
+    font-family: "Fira Sans Condensed";
+    src: url("../fonts/FiraSansCondensed-Bold.woff2") format("woff2"),
+      url("../fonts/FiraSansCondensed-Bold.woff") format("woff");
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Fira Sans Condensed";
+    src: url("../fonts/FiraSansCondensed-Regular.woff2")
+        format("woff2"),
+      url("../fonts/FiraSansCondensed-Regular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Fira Sans Condensed";
+    src: url("../fonts/FiraSansCondensed-SemiBold.woff2")
+      format("woff2");
+    font-weight: 600;
+    font-style: normal;
+  }
+  ```
+3. Set the fonts in `./theme.json`
+
+
+
+### 4. Optional: configure logging
 
 Docker container logs are sent to syslog by default and assume a syslog daemon
 is running on the host server. We use rsyslog with a custom configuration to
