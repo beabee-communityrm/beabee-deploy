@@ -1,14 +1,36 @@
-Very basic server setup with optional auto deployment for beabee. If you hit any
+A basic server setup with optional auto deployment for beabee. If you hit any
 problems or find anything confusing please raise an issue, these instructions
 are evolving!
 
-Requirements:
+Server requirements:
 
 - Docker >= 19.03.8
 - Docker Compose: >= 1.28.0
-- Postgres: >= 10 (can be installed on any server as long as it's accessible to this one)
+
+You must also have a PostgreSQL server (>= 10) that is accessible to the server beabee is being installed on
+
 
 ## Basic setup
+
+### 1. Create a database
+
+Run the following on your database server to create beabee's database and user role
+```sql
+CREATE USER "<user>" WITH PASSWORD '<password>';
+CREATE DATABASE "<db>" WITH OWNER "<user>";
+\c <db>
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+GRANT ALL ON SCHEMA public TO "<user>";
+```
+
+You can choose `<user>`, `<password>` and `<db>`, you will use the following connection string in beabee's configuration:
+
+```
+postgresql://<user>:<password>@<host>/<db>
+```
+
+### 2. Install beabee
 
 Run the following as root.
 
@@ -17,6 +39,7 @@ cd <installation directory>
 
 curl -O https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/docker-compose.yml
 curl -O https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/Dockerfile.frontend
+curl -O https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/theme.json
 
 # Setup config (you need to fill in .env)
 curl -o .env https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/.env.example
@@ -36,7 +59,7 @@ DOCKER_BUILDKIT=1 docker-compose build --pull
 docker-compose up -d
 ```
 
-### Logging
+### 3. Configure logging
 
 Docker container logs are sent to syslog by default and assume a syslog daemon
 is running on the host server. We use rsyslog with a custom configuration to
@@ -46,13 +69,13 @@ logs.
 If you want this too, run the following as root.
 
 ```bash
-wget -o /etc/rsyslog.d/30-docker.conf https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/rsyslog.conf
-wget -o /etc/logrotate.d/docker https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/logrotate.conf
+curl -o /etc/rsyslog.d/30-docker.conf https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/rsyslog.conf
+curl -o /etc/logrotate.d/docker https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/logrotate.conf
 ```
 
 ## Auto deployment setup
 
-> :warning: **NOTE**: The deployment script `deploy.sh` assumes instances are created in
+> :warning: **NOTE**: The deployment script `deploy.sh` assumes beabee instances are installed in
 > `/opt/beabee/<stage>/<name>`
 
 Run the following as root, replace `<public key>` with a deploy key.
