@@ -1,6 +1,10 @@
-A basic server setup with optional auto deployment for beabee. If you hit any
-problems or find anything confusing please raise an issue, these instructions
-are evolving!
+# A guide to self-hosting beabee
+
+**Any questions?** Raise an issue or email tech@beabee.io. We will do our best to help but we are a very small team so can't offer any formal support.
+
+Please note that beabee is currently in the early stages of development, as such this setup is likely to change in the future. We will offer guidance where possible when we make significant changes, if you want to be kept informed please let us know you are self-hosting beabee at tech@beabee.io.
+
+## Basic setup
 
 Server requirements:
 
@@ -8,9 +12,6 @@ Server requirements:
 - Docker Compose: >= 1.28.0
 
 You must also have a PostgreSQL server (>= 10) that is accessible to the server beabee is being installed on
-
-
-## Basic setup
 
 ### 1. Create a database
 
