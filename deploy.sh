@@ -1,7 +1,5 @@
 #!/bin/bash -e
 
-export DOCKER_BUILDKIT=1
-
 if [ "$#" -gt 0 ]; then
         stage="$1"
         shift
@@ -29,19 +27,12 @@ fi
                 fi
 
                 echo "## Updating $app"
-
                 pushd $app_dir
 
                 date
-                docker-compose pull
-                docker-compose build --pull
-                docker-compose run --rm --no-deps run npm run typeorm migration:run
-                echo "## Restarting $app"
-                docker-compose up -d --remove-orphans
-                docker-compose exec -T router nginx -s reload
-                docker-compose exec -T app_router nginx -s reload
-                echo "## Finished updated $app"
+                /opt/beabee/update.sh
 
+                echo "## Finished updated $app"
                 popd
         done
 

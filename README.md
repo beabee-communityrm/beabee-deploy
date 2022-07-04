@@ -67,11 +67,10 @@ docker-compose run --rm run node built/tools/new-user
 
 beabee's theme is customisable so it can match your site's identity.
 
-To apply changes to the theme you must rebuild and restart the Docker containers
+To apply changes to the theme you must rebuild and restart the Docker
+containers, you can use the update script
 ```
-DOCKER_BUILDKIT=1 docker-compose build --pull
-docker-compose up -d
-docker-compose restart
+./update.sh
 ```
 
 #### Logo and favicon
@@ -145,6 +144,21 @@ curl -o /etc/rsyslog.d/30-docker.conf https://raw.githubusercontent.com/beabee-c
 curl -o /etc/logrotate.d/docker https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/logrotate.conf
 ```
 
+### 5. Updating
+
+To get the latest version of beabee you can use the provide update script. You can store it anywhere but
+we recommend you store it in the same directory as your beabee install
+```bash
+curl https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/update.sh
+chmod 0755 ./update.sh
+```
+
+To update simply navigate to your beabee install and run the script
+```bash
+cd <installation directory>
+./update.sh
+```
+
 ## Auto deployment setup
 
 Run the following as root, replace `<public key>` with a deploy key.
@@ -158,8 +172,9 @@ adduser --system --shell /bin/bash deploy
 echo 'Defaults:deploy env_keep += "SSH_ORIGINAL_COMMAND"' > /etc/sudoers.d/deploy
 echo 'deploy  ALL=(root) NOPASSWD: /opt/beabee/deploy.sh' >> /etc/sudoers.d/deploy
 
+curl -o /opt/beabee/update.sh https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/update.sh
 curl -o /opt/beabee/deploy.sh https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/deploy.sh
-chmod 0755 /opt/beabee/deploy.sh
+chmod 0755 /opt/beabee/deploy.sh /opt/beabee/update.sh
 
 su deploy
 mkdir /home/deploy/.ssh
