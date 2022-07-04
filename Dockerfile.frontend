@@ -17,7 +17,6 @@ ENV VITE_STRIPE_COUNTRY=$STRIPE_COUNTRY
 
 RUN ln -sf ${APP_LOCALE}.json locales/_current.json
 COPY data/assets/ /opt/beabee-frontend/src/assets/
-COPY theme.json /opt/beabee-frontend/
 COPY data/public/ /opt/beabee-frontend/public/
 
 RUN npx vite build
