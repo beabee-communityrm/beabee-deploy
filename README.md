@@ -146,7 +146,7 @@ curl -o /etc/logrotate.d/docker https://raw.githubusercontent.com/beabee-communi
 
 ### 5. Updating
 
-To get the latest version of beabee you can use the provide update script. You can store it anywhere but
+To get the latest version of beabee you can use the provided update script. You can store it anywhere but
 we recommend you store it in the same directory as your beabee install
 ```bash
 curl https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/update.sh
