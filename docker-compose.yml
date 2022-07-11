@@ -25,6 +25,8 @@ services:
     environment:
       CONTENTCONTROLLERS: IMAGE,TEXT
     init: true
+    volumes:
+      - ./data/uploads:/var/www/data
 
   cron:
     <<: *app

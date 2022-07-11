@@ -47,7 +47,7 @@ curl -o .env https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/
 chmod 0600 .env
 
 # Frontend theming (see below)
-mkdir -p data/public data/assets
+mkdir -p data/public data/assets data/uploads
 
 # Run database migrations
 docker-compose run --rm --no-deps run npm run typeorm migration:run
