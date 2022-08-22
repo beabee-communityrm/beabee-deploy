@@ -6,7 +6,6 @@ ENV NODE_ENV=production
 
 ARG API_BASE_URL=/api/1.0
 ARG APP_BASE_URL
-ARG APP_LOCALE
 ARG STRIPE_COUNTRY
 ARG STRIPE_PUBLIC_KEY
 
@@ -14,11 +13,6 @@ ENV VITE_API_BASE_URL=$API_BASE_URL
 ENV VITE_APP_BASE_URL=$APP_BASE_URL
 ENV VITE_STRIPE_PUBLIC_KEY=$STRIPE_PUBLIC_KEY
 ENV VITE_STRIPE_COUNTRY=$STRIPE_COUNTRY
-
-RUN ln -sf ${APP_LOCALE}.json locales/_current.json
-COPY data/assets/ /opt/beabee-frontend/src/assets/
-COPY theme.json /opt/beabee-frontend/
-COPY data/public/ /opt/beabee-frontend/public/
 
 RUN npx vite build
 

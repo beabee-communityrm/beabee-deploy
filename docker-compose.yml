@@ -50,7 +50,6 @@ services:
       dockerfile: Dockerfile.frontend
       args:
         APP_BASE_URL: ${BEABEE_AUDIENCE}
-        APP_LOCALE: ${BEABEE_LOCALE}
         STRIPE_PUBLIC_KEY: ${BEABEE_STRIPE_PUBLICKEY}
         STRIPE_COUNTRY: ${BEABEE_STRIPE_COUNTRY}
 
