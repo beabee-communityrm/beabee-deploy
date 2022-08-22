@@ -14,6 +14,9 @@ ENV VITE_APP_BASE_URL=$APP_BASE_URL
 ENV VITE_STRIPE_PUBLIC_KEY=$STRIPE_PUBLIC_KEY
 ENV VITE_STRIPE_COUNTRY=$STRIPE_COUNTRY
 
+COPY data/assets/ /opt/beabee-frontend/src/assets/
+COPY data/public/ /opt/beabee-frontend/public/
+
 RUN npx vite build
 
 FROM nginx:1.18.0-alpine

@@ -47,7 +47,7 @@ curl -o .env https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/
 chmod 0600 .env
 
 # Persistent location to store file uploads
-mkdir -p data/uploads
+mkdir -p data/uploads data/assets data/public
 
 # Run database migrations
 docker-compose run --rm --no-deps run npm run typeorm migration:run
