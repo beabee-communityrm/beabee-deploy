@@ -10,6 +10,15 @@ x-app: &app
       tag: docker/{{.Name}}
 
 services:
+  db:
+    image: postgres:10.15
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: membership_system
+      POSTGRES_PASSWORD: membership_system
+      POSTGRES_DB: membership_system
+
   app: *app
 
   api_app:
@@ -61,3 +70,6 @@ services:
       FRONTEND_APP_URL: http://frontend
     ports:
       - ${MAIN_PORT}:80
+
+volumes:
+  db_data:
