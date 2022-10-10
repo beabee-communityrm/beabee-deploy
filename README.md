@@ -40,8 +40,8 @@ cd <installation directory>
 
 # Get the files (you need to fill in .env)
 curl -O https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/docker-compose.yml
+curl -O https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/update.sh
 curl -o .env https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/.env.example
-curl https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/update.sh
 chmod 0600 .env
 chmod 0700 update.sh
 
