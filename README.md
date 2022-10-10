@@ -38,26 +38,18 @@ Run the following as root.
 ```bash
 cd <installation directory>
 
+# Get the files (you need to fill in .env)
 curl -O https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/docker-compose.yml
-curl -O https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/Dockerfile.frontend
-curl -O https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/theme.json
-
-# Setup config (you need to fill in .env)
 curl -o .env https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/.env.example
+curl https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/update.sh
 chmod 0600 .env
+chmod 0700 update.sh
 
 # Persistent location to store file uploads
-mkdir -p data/uploads data/assets data/public
+mkdir -p data/uploads
 
-# Run database migrations
-docker-compose run --rm --no-deps run npm run typeorm migration:run
-
-# Create beabee container images
-docker-compose pull
-DOCKER_BUILDKIT=1 docker-compose build --pull
-
-# Start beabee
-docker-compose up -d
+# Install everything
+./update.sh
 
 # Create a first user to login with
 docker-compose run --rm run node built/tools/new-user
@@ -78,13 +70,6 @@ curl -o /etc/logrotate.d/docker https://raw.githubusercontent.com/beabee-communi
 ```
 
 ### 4. Updating
-
-To get the latest version of beabee you can use the provided update script. You can store it anywhere but
-we recommend you store it in the same directory as your beabee install
-```bash
-curl https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/update.sh
-chmod 0755 ./update.sh
-```
 
 To update simply navigate to your beabee install and run the script
 ```bash

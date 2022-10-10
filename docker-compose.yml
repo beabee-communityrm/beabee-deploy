@@ -2,6 +2,7 @@ version: '3.4'
 
 x-app: &app
   image: beabee/beabee:stable
+  restart: always
   env_file:
     - .env
   logging:
@@ -22,6 +23,7 @@ services:
 
   img_upload_app:
     image: hascheksolutions/pictshare:72394f17
+    restart: always
     environment:
       CONTENTCONTROLLERS: IMAGE,TEXT
     init: true
@@ -36,6 +38,7 @@ services:
 
   router:
     image: beabee/router:stable
+    restart: always
 
   run:
     <<: *app
@@ -45,16 +48,15 @@ services:
       driver: none
 
   frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile.frontend
-      args:
-        APP_BASE_URL: ${BEABEE_AUDIENCE}
-        STRIPE_PUBLIC_KEY: ${BEABEE_STRIPE_PUBLICKEY}
-        STRIPE_COUNTRY: ${BEABEE_STRIPE_COUNTRY}
+    image: beabee/frontend:stable
+    restart: always
+    environment:
+      APP_BASE_URL: ${BEABEE_AUDIENCE}
+      API_BASE_URL: /api/1.0
 
   app_router:
     image: beabee/app-router:latest
+    restart: always
     environment:
       LEGACY_APP_URL: http://router
       LEGACY_APP_COOKIE_DOMAIN: ${BEABEE_COOKIE_DOMAIN}
