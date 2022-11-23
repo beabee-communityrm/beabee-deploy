@@ -1,7 +1,7 @@
 version: '3.4'
 
 x-app: &app
-  image: beabee/beabee:stable
+  image: beabee/beabee:release
   restart: always
   env_file:
     - .env
@@ -37,7 +37,7 @@ services:
     init: true
 
   router:
-    image: beabee/router:stable
+    image: beabee/router:release
     restart: always
 
   run:
@@ -48,7 +48,7 @@ services:
       driver: none
 
   frontend:
-    image: beabee/frontend:stable
+    image: beabee/frontend:release
     restart: always
     environment:
       APP_BASE_URL: ${BEABEE_AUDIENCE}
