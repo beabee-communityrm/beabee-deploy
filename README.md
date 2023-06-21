@@ -51,6 +51,9 @@ mkdir -p data/uploads
 # Install everything
 ./update.sh
 
+# Do some initial configuration
+docker-compose run --rm run node built/tools/configure
+
 # Create a first user to login with
 docker-compose run --rm run node built/tools/new-user
 ```
