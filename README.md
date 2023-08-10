@@ -11,7 +11,7 @@ Server requirements:
 - Docker >= 19.03.8
 - Docker Compose: >= 1.28.0
 
-You must also have a PostgreSQL server (>= 10) that is accessible to the server beabee is being installed on
+You must also have a PostgreSQL server (>= 13) that is accessible to the server beabee is being installed on
 
 ### 1. Create a database
 
