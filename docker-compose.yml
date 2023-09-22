@@ -54,6 +54,8 @@ services:
     environment:
       APP_BASE_URL: ${BEABEE_AUDIENCE}
       API_BASE_URL: /api/1.0
+      APPSIGNAL_KEY: ${APPSIGNAL_KEY-}
+      MAPTILER_KEY: ${BEABEE_MAPTILER_KEY-}
 
   app_router:
     image: beabee/app-router:latest
@@ -62,5 +64,6 @@ services:
       LEGACY_APP_URL: http://router
       LEGACY_APP_COOKIE_DOMAIN: ${BEABEE_COOKIE_DOMAIN}
       FRONTEND_APP_URL: http://frontend
+      TRUSTED_ORIGINS: ${BEABEE_TRUSTEDORIGINS-}
     ports:
       - ${MAIN_PORT}:80
