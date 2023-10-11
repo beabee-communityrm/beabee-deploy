@@ -56,6 +56,7 @@ services:
       API_BASE_URL: /api/1.0
       APPSIGNAL_KEY: ${APPSIGNAL_KEY-}
       MAPTILER_KEY: ${BEABEE_MAPTILER_KEY-}
+      EXPERIMENTAL_FEATURES: ${BEABEE_EXPERIMENTAL_FEATURES-}
 
   app_router:
     image: beabee/app-router:latest
