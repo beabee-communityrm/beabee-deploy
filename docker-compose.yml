@@ -27,12 +27,10 @@ services:
     image: beabee/beabee-cron-app:release
 
   img_upload_app:
-    image: beabee/pictshare:latest
+    image: beabee/pictshare:release
     restart: always
     environment:
       URL: ${BEABEE_AUDIENCE}/uploads/
-      CONTENTCONTROLLERS: IMAGE,TEXT
-    init: true
     volumes:
       - ./data/uploads:/var/www/data
 
