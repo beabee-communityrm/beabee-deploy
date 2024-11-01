@@ -1,7 +1,6 @@
 version: '3.4'
 
 x-app: &app
-  image: beabee/beabee:release
   restart: always
   env_file:
     - .env
@@ -11,15 +10,21 @@ x-app: &app
       tag: docker/{{.Name}}
 
 services:
-  app: *app
+  app:
+    <<: *app
+    image: beabee/beabee-legacy-app:release
 
   api_app:
     <<: *app
-    command: 'node built/api/app'
+    image: beabee/beabee-api-app:release
 
   webhook_app:
     <<: *app
-    command: 'node built/webhooks/app'
+    image: beabee/beabee-webhook-app:release
+
+  cron:
+    <<: *app
+    image: beabee/beabee-cron-app:release
 
   img_upload_app:
     image: beabee/pictshare:latest
@@ -30,16 +35,6 @@ services:
     init: true
     volumes:
       - ./data/uploads:/var/www/data
-
-  cron:
-    <<: *app
-    user: root
-    command: 'crond -f -d 7'
-    init: true
-
-  router:
-    image: beabee/router:release
-    restart: always
 
   run:
     <<: *app
@@ -59,12 +54,10 @@ services:
       EXPERIMENTAL_FEATURES: ${BEABEE_EXPERIMENTAL_FEATURES-}
 
   app_router:
-    image: beabee/app-router:latest
+    image: beabee/beabee-router:latest
     restart: always
     environment:
-      LEGACY_APP_URL: http://router
       LEGACY_APP_COOKIE_DOMAIN: ${BEABEE_COOKIE_DOMAIN}
-      FRONTEND_APP_URL: http://frontend
       TRUSTED_ORIGINS: ${BEABEE_TRUSTEDORIGINS-}
     ports:
       - ${MAIN_PORT}:80
