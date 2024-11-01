@@ -22,7 +22,7 @@ services:
     <<: *app
     image: beabee/beabee-webhook-app:release
 
-  cron:
+  cron_app:
     <<: *app
     image: beabee/beabee-cron-app:release
 
