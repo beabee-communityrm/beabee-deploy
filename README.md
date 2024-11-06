@@ -9,7 +9,7 @@ Please note that beabee is currently in the early stages of development, as such
 Server requirements:
 
 - Docker >= 19.03.8
-- Docker Compose: >= 1.28.0
+- Docker Compose >= 2
 
 You must also have a PostgreSQL server (>= 13) that is accessible to the server beabee is being installed on
 
