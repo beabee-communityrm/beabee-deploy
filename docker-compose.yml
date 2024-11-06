@@ -43,7 +43,7 @@ services:
       driver: none
 
   frontend:
-    image: beabee/frontend:release
+    image: beabee/beabee-frontend:release
     restart: always
     environment:
       APP_BASE_URL: ${BEABEE_AUDIENCE}
@@ -54,7 +54,7 @@ services:
       MAPTILER_KEY: ${BEABEE_MAPTILER_KEY-}
 
   app_router:
-    image: beabee/beabee-router:latest
+    image: beabee/beabee-router:release
     restart: always
     environment:
       LEGACY_APP_COOKIE_DOMAIN: ${BEABEE_COOKIE_DOMAIN}
