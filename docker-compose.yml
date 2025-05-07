@@ -27,6 +27,13 @@ services:
   minio:
     image: beabee/beabee-minio:release
     restart: always
+  volumes:
+    - minio_data:/data
+  healthcheck:
+    test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+    interval: 30s
+    timeout: 20s
+    retries: 3
     environment:
       MINIO_ROOT_USER: ${BEABEE_MINIO_ROOT_USER:-minioadmin}
       MINIO_ROOT_PASSWORD: ${BEABEE_MINIO_ROOT_PASSWORD:-minioadmin}
@@ -66,3 +73,5 @@ services:
       - app
       - frontend
       - webhook_app
+volumes:
+  minio_data:
