@@ -52,10 +52,10 @@ mkdir -p data/uploads
 ./update.sh
 
 # Do some initial configuration
-docker-compose run --rm run node built/tools/configure
+docker compose run --rm tun yarn backend-cli configure --emailDomain <example.com>
 
 # Create a first user to login with
-docker-compose run --rm run node built/tools/new-user
+docker compose run --rm tun yarn backend-cli user create --firstname <YourFirstname> --lastname <YourLastname> --email <YourEmail> --password <YourPassword>
 ```
 
 ### 3. Optional: configure logging
@@ -72,12 +72,35 @@ curl -o /etc/rsyslog.d/30-docker.conf https://raw.githubusercontent.com/beabee-c
 curl -o /etc/logrotate.d/docker https://raw.githubusercontent.com/beabee-communityrm/beabee-deploy/main/logrotate.conf
 ```
 
-### 4. Updating
+### 4. File Storage: MinIO
+
+beabee uses MinIO for file storage. The MinIO service is automatically configured in the docker-compose.yml file.
+
+By default, MinIO uses these credentials:
+- Username: minioadmin
+- Password: minioadmin
+
+For production environments, we strongly recommend changing these defaults by setting the following environment variables in your .env file:
+```
+BEABEE_MINIO_ROOT_USER=your_custom_username
+BEABEE_MINIO_ROOT_PASSWORD=your_secure_password
+```
+
+### 5. Updating
 
 To update simply navigate to your beabee install and run the script
 ```bash
 cd <installation directory>
 ./update.sh
+```
+
+#### Migrating from PictShare
+
+If you're upgrading from a previous version that used PictShare for file storage, you'll need to migrate your uploads to MinIO. Run the following command:
+
+```bash
+# Mount your old PictShare uploads volume
+docker-compose exec api_app yarn backend-cli migrate-uploads --source=/old_data
 ```
 
 ## Auto deployment setup
@@ -110,3 +133,7 @@ ssh deploy@<server> <stage>
 ```
 
 See https://github.com/beabee-communityrm/beabee/blob/master/.github/workflows/deploy.yml for an example
+
+## Note: Future CLI Integration
+
+This deployment repository will soon be integrated into the main beabee monorepo. Future versions will provide a streamlined installation process using an NPX-runnable CLI tool. Stay tuned for updates.
