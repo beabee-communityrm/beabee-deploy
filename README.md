@@ -52,10 +52,10 @@ mkdir -p data/uploads
 ./update.sh
 
 # Do some initial configuration
-docker compose run --rm tun yarn backend-cli configure --emailDomain <example.com>
+docker compose run --rm run yarn backend-cli configure --emailDomain <example.com>
 
 # Create a first user to login with
-docker compose run --rm tun yarn backend-cli user create --firstname <YourFirstname> --lastname <YourLastname> --email <YourEmail> --password <YourPassword>
+docker compose run --rm run yarn backend-cli user create --firstname <YourFirstname> --lastname <YourLastname> --email <YourEmail> --password <YourPassword>
 ```
 
 ### 3. Optional: configure logging
@@ -100,7 +100,7 @@ If you're upgrading from a previous version that used PictShare for file storage
 
 ```bash
 # Mount your old PictShare uploads volume
-docker-compose exec api_app yarn backend-cli migrate-uploads --source=/old_data
+docker compose exec api_app yarn backend-cli migrate-uploads --source=/old_data
 ```
 
 ## Auto deployment setup
